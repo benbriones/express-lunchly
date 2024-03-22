@@ -49,9 +49,9 @@ router.get("/search", async function (req, res) {
 /** Populate top ten users with most reservations */
 
 router.get("/top-ten", async function (req, res) {
-  const customers = await Customer.getTopTen();
-  console.log("customers", customers);
-  return res.render("customer_top_ten_list.jinja", { customers });
+  const customerData = await Customer.getTopTen();
+  console.log("customers*********", customerData);
+  return res.render("customer_top_ten_list.jinja", { customerData });
 });
 
 /** Show a customer, given their ID. */

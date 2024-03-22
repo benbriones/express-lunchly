@@ -4,13 +4,13 @@
 
   <h1>Customers</h1>
 
-  <ol style="column-count: 4">
-    {% for customer in customers %}
+  <ol>
+    {% for singleCustomer in customerData %}
       <li>
-        <a href="/{{ customer.id }}/">
-          {{ customer.fullName() }}
+        <a href="/{{ singleCustomer.customer.id }}/">
+          {{ singleCustomer.customer.fullName }}
         </a>
-        <span>{{ customer.numReservations }}</span>
+        <span>({{ singleCustomer.numReservations }} reservations)</span>
       </li>
     {% endfor %}
   </ol>

@@ -1,7 +1,7 @@
 "use strict";
 
 /** Customer for Lunchly */
-const { NotFoundError } = require("../expressError")
+const { NotFoundError } = require("../expressError");
 
 const db = require("../db");
 const Reservation = require("./reservation");
@@ -82,7 +82,7 @@ class Customer {
   }
 
   /** get top ten customers with most reservations */
-
+  //TODO: update docstring returns {...}
   static async getTopTen() {
 
     const results = await db.query(
@@ -100,8 +100,16 @@ class Customer {
     );
 
     const customers = results.rows;
+    console.log(customers);
 
-    return customers.map(c => new Customer(c));
+    // TODO: change customer vars
+    return customers.map(c => {
+      let customer = {};
+      let newCustomer = new Customer(c);
+      customer["customer"] = newCustomer;
+      customer["numReservations"] = c.numReservations;
+      return customer;
+    });
 
   }
 
@@ -141,9 +149,21 @@ class Customer {
     }
   }
 
-  fullName() {
+  /** gets full name of customer */
+  get fullName() {
     return `${this.firstName} ${this.lastName}`;
   }
+
+  /** get notes of a customer */
+  get notes() {
+    return this.notes;
+  }
+
+  /** set a note for a customer */
+  set notes(note) {
+    this.notes = note || "";
+  }
+
 }
 
 module.exports = Customer;
