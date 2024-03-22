@@ -38,7 +38,6 @@ router.post("/add/", async function (req, res, next) {
 
 /** Search bar */
 
-// TODO: ask about bug where /search had to be above /:id in route lists
 router.get("/search", async function (req, res) {
   const name = req.query.search;
 
@@ -51,7 +50,7 @@ router.get("/search", async function (req, res) {
 
 router.get("/top-ten", async function (req, res) {
   const customers = await Customer.getTopTen();
-
+  console.log("customers", customers);
   return res.render("customer_top_ten_list.jinja", { customers });
 });
 

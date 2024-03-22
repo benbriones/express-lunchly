@@ -1,6 +1,7 @@
 "use strict";
 
 /** Customer for Lunchly */
+const { NotFoundError } = require("../expressError")
 
 const db = require("../db");
 const Reservation = require("./reservation");
@@ -48,9 +49,7 @@ class Customer {
     const customer = results.rows[0];
 
     if (customer === undefined) {
-      const err = new Error(`No such customer: ${id}`);
-      err.status = 404;
-      throw err;
+      throw new NotFoundError(`No such customer: ${id}`);
     }
 
     return new Customer(customer);
@@ -68,7 +67,7 @@ class Customer {
                   phone,
                   notes
            FROM customers
-           WHERE first_name ILIKE $1 OR last_name ILIKE $1
+           WHERE concat(first_name, ' ', last_name) ILIKE $1
            ORDER BY first_name, last_name`,
       [`%${name}%`],
     );
@@ -76,9 +75,7 @@ class Customer {
     const customers = results.rows;
 
     if (customers.length === 0) {
-      const err = new Error(`No customers matching name: ${name}`);
-      err.status = 404;
-      throw err;
+      throw new NotFoundError(`No customers matching name: ${name}`);
     }
 
     return customers.map(c => new Customer(c));
