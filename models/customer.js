@@ -89,18 +89,18 @@ class Customer {
   static async getTopTen() {
 
     const results = await db.query(
-      `SELECT customer.id,
-              customer.first_name,
-              customer.last_name,
-              customer.phone,
-              customer.notes
-              COUNT(reservations) as "numReservations"
+      `SELECT customers.id,
+              customers.first_name AS "firstName",
+              customers.last_name AS "lastName",
+              customers.phone,
+              customers.notes,
+              COUNT(reservations) AS "numReservations"
       FROM customers
-      JOIN reservations ON customer.id = reservations.customer_id
-        GROUP BY customer.id
+      JOIN reservations ON customers.id = reservations.customer_id
+        GROUP BY customers.id
         ORDER BY COUNT(reservations) DESC
         LIMIT 10`
-    )
+    );
 
     const customers = results.rows;
 
