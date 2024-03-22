@@ -123,6 +123,18 @@ router.get("/:id/edit-reservation", async function (req, res) {
 
 router.post("/:id/edit-reservation", async function (req, res) {
 
+  if (req.body === undefined) {
+    throw new BadRequestError();
+  }
+
+  const reservation = await Reservation.getResById(req.params.id);
+
+  reservation.numGuests = req.body.numGuests;
+  reservation.startAt = req.body.startAt;
+  reservation.notes = req.body.notes;
+
+  await reservation.save();
+  return res.redirect(`/${reservation.customerId}/`);
 });
 
 

@@ -24,6 +24,10 @@ class Reservation {
     return moment(this.startAt).format("MMMM Do YYYY, h:mm a");
   }
 
+  getStartAtForForm() {
+    return moment(this.startAt).format("YYYY MM DD, h:mm a");
+  }
+
   /** get a reservation by ID */
 
   static async getResById(resId) {
@@ -80,7 +84,7 @@ class Reservation {
             start_at = $2,
             num_guests = $3,
             notes = $4
-            WHERE id  = $5,`
+            WHERE id  = $5`,
         [this.customerId, this.startAt, this.numGuests, this.notes, this.id]
       );
     }
