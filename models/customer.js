@@ -156,12 +156,12 @@ class Customer {
 
   /** get notes of a customer */
   get notes() {
-    return this.notes;
+    return this._notes;
   }
 
   /** set a note for a customer */
   set notes(note) {
-    this.notes = note || "";
+    this._notes = note || '';
   }
 
 }

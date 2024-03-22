@@ -110,5 +110,20 @@ router.post("/:id/add-reservation/", async function (req, res, next) {
   return res.redirect(`/${customerId}/`);
 });
 
+/** Show form to edit a reservation */
+
+router.get("/:id/edit-reservation", async function (req, res) {
+  const reservation = await Reservation.getResById(req.params.id);
+
+  res.render("reservation_edit_form.jinja", { reservation });
+});
+
+
+/** Handle editing a reservation */
+
+router.post("/:id/edit-reservation", async function (req, res) {
+
+});
+
 
 module.exports = router;

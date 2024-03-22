@@ -21,10 +21,13 @@
       {% if reservations %}
         <ul>
           {% for reservation in reservations %}
+            <a href="/{{ reservation.id }}/edit-reservation">
             <li>
               <b>{{ reservation.getFormattedStartAt() }}</b>
               for {{ reservation.numGuests }}
             </li>
+            </a>
+
           {% endfor %}
         </ul>
       {% else %}

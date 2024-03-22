@@ -1,6 +1,7 @@
 "use strict";
 
 /** Reservation for Lunchly */
+const { NotFoundError } = require("../expressError");
 
 const moment = require("moment");
 
@@ -21,6 +22,29 @@ class Reservation {
 
   getFormattedStartAt() {
     return moment(this.startAt).format("MMMM Do YYYY, h:mm a");
+  }
+
+  /** get a reservation by ID */
+
+  static async getResById(resId) {
+    const results = await db.query(
+      `SELECT id,
+                  customer_id AS "customerId",
+                  num_guests AS "numGuests",
+                  start_at AS "startAt",
+                  notes AS "notes"
+           FROM reservations
+           WHERE id = $1`,
+           [resId]
+    );
+
+    const reservation = results.rows[0];
+
+    if (reservation === undefined) {
+      throw new NotFoundError(`No such reservation: ${resId}`);
+    }
+
+    return new Reservation(reservation);
   }
 
   /** given a customer id, find their reservations. */
