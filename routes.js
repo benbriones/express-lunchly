@@ -36,6 +36,16 @@ router.post("/add/", async function (req, res, next) {
   return res.redirect(`/${customer.id}/`);
 });
 
+/** Search bar */
+
+// TODO: ask about bug where /search had to be above /:id in route lists
+router.get("/search", async function (req, res) {
+  const name = req.query.search;
+
+  const customers = await Customer.getCustomersByName(name);
+  return res.render("customer_list.jinja", {customers})
+})
+
 /** Show a customer, given their ID. */
 
 router.get("/:id/", async function (req, res, next) {
@@ -91,5 +101,6 @@ router.post("/:id/add-reservation/", async function (req, res, next) {
 
   return res.redirect(`/${customerId}/`);
 });
+
 
 module.exports = router;
